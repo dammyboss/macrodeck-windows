@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>MacroDeck</AssemblyName>
+    <RootNamespace>MacroDeck</RootNamespace>
+    <Version>0.1.0</Version>
+    <Authors>Damilola Onadeinde</Authors>
+    <Company>MacroDeck</Company>
+    <Description>Precision mouse and keyboard macro recorder for Windows</Description>
+    <Copyright>© 2026 Damilola Onadeinde</Copyright>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+</Project>

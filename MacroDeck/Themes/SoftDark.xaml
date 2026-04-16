@@ -1,0 +1,38 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Surface colors -->
+    <Color x:Key="WindowBg">#FF0D0D11</Color>
+    <Color x:Key="Elevated">#FF15151C</Color>
+    <Color x:Key="Hover">#FF1C1C25</Color>
+
+    <SolidColorBrush x:Key="WindowBgBrush" Color="{StaticResource WindowBg}" />
+    <SolidColorBrush x:Key="ElevatedBrush" Color="{StaticResource Elevated}" />
+    <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource Hover}" />
+
+    <!-- Borders -->
+    <SolidColorBrush x:Key="BorderBrush" Color="#0DFFFFFF" />
+    <SolidColorBrush x:Key="BorderMidBrush" Color="#14FFFFFF" />
+    <SolidColorBrush x:Key="BorderStrongBrush" Color="#1FFFFFFF" />
+
+    <!-- Text -->
+    <SolidColorBrush x:Key="Text0Brush" Color="#FFEDEDF0" />
+    <SolidColorBrush x:Key="Text1Brush" Color="#FF9A9BA8" />
+    <SolidColorBrush x:Key="Text2Brush" Color="#FF797A8A" />
+    <SolidColorBrush x:Key="Text3Brush" Color="#FF3A3B45" />
+
+    <!-- Accent -->
+    <Color x:Key="Accent">#FFEF4444</Color>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}" />
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="#1FEF4444" />
+
+    <!-- Event type colors -->
+    <SolidColorBrush x:Key="CyanBrush" Color="#FF22D3EE" />
+    <SolidColorBrush x:Key="AmberBrush" Color="#FFF59E0B" />
+    <SolidColorBrush x:Key="GreenBrush" Color="#FF10B981" />
+
+    <!-- Fonts -->
+    <FontFamily x:Key="MonoFont">Cascadia Mono, Consolas, Courier New</FontFamily>
+    <FontFamily x:Key="UIFont">Segoe UI, Tahoma</FontFamily>
+
+</ResourceDictionary>
