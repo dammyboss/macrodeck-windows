@@ -14,6 +14,7 @@
     <SolidColorBrush x:Key="BorderBrush" Color="#0DFFFFFF" />
     <SolidColorBrush x:Key="BorderMidBrush" Color="#14FFFFFF" />
     <SolidColorBrush x:Key="BorderStrongBrush" Color="#1FFFFFFF" />
+    <SolidColorBrush x:Key="BorderBrightBrush" Color="#2EFFFFFF" />
 
     <!-- Text -->
     <SolidColorBrush x:Key="Text0Brush" Color="#FFEDEDF0" />
@@ -34,5 +35,72 @@
     <!-- Fonts -->
     <FontFamily x:Key="MonoFont">Cascadia Mono, Consolas, Courier New</FontFamily>
     <FontFamily x:Key="UIFont">Segoe UI, Tahoma</FontFamily>
+
+    <!-- ═══ Reusable button styles ═══ -->
+
+    <!-- Mini action button (Play, Stop, Save, Open) — rounded corners -->
+    <Style x:Key="MiniButton" TargetType="Button">
+        <Setter Property="Width" Value="42" />
+        <Setter Property="Height" Value="34" />
+        <Setter Property="Margin" Value="3,0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{StaticResource Text1Brush}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" CornerRadius="9"
+                            Background="{StaticResource ElevatedBrush}"
+                            BorderBrush="{StaticResource BorderMidBrush}"
+                            BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background"
+                                    Value="{StaticResource HoverBrush}" />
+                            <Setter TargetName="Bd" Property="BorderBrush"
+                                    Value="{StaticResource BorderBrightBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background"
+                                    Value="{StaticResource WindowBgBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Gear / icon button — rounded, smaller -->
+    <Style x:Key="IconButton" TargetType="Button">
+        <Setter Property="Width" Value="28" />
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{StaticResource Text2Brush}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" CornerRadius="7"
+                            Background="{StaticResource ElevatedBrush}"
+                            BorderBrush="{StaticResource BorderStrongBrush}"
+                            BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background"
+                                    Value="{StaticResource HoverBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource Text0Brush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

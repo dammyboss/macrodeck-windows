@@ -15,19 +15,47 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />   <!-- Hero + Transport -->
-            <RowDefinition Height="36" />     <!-- Waveform -->
+            <RowDefinition Height="40" />      <!-- Chrome bar -->
+            <RowDefinition Height="Auto" />    <!-- Hero + Transport -->
+            <RowDefinition Height="36" />      <!-- Waveform -->
             <RowDefinition Height="*" />       <!-- Stream -->
             <RowDefinition Height="36" />      <!-- Status bar -->
         </Grid.RowDefinitions>
 
+        <!-- ═══ Chrome bar ═══ -->
+        <Border Grid.Row="0" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+            <DockPanel Margin="14,0">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                    <Ellipse Width="7" Height="7" Fill="{StaticResource AccentBrush}" Margin="0,0,8,0" />
+                    <TextBlock Text="MacroDeck" FontSize="12" FontWeight="Medium"
+                               Foreground="{StaticResource Text1Brush}" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding SessionName}" FontSize="11" FontWeight="Normal"
+                               Foreground="{StaticResource Text2Brush}" VerticalAlignment="Center"
+                               Margin="8,0,0,0" MaxWidth="220" TextTrimming="CharacterEllipsis">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SessionName}" Value="Untitled Session">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+
+                <Button DockPanel.Dock="Right" Content="⚙" Style="{StaticResource IconButton}"
+                        Command="{Binding OpenSettingsCommand}" ToolTip="Settings" />
+            </DockPanel>
+        </Border>
+
         <!-- ═══ Hero + Transport ═══ -->
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,28,0,16">
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,24,0,14">
 
             <!-- Timecode -->
             <TextBlock Text="{Binding ElapsedDisplay}"
                        FontFamily="{StaticResource MonoFont}"
-                       FontSize="50" FontWeight="Light"
+                       FontSize="48" FontWeight="Light"
                        Foreground="{StaticResource Text0Brush}"
                        HorizontalAlignment="Center" />
 
@@ -55,80 +83,81 @@
             <!-- Session name -->
             <TextBlock Text="{Binding SessionName}"
                        FontSize="12" FontWeight="Medium"
-                       Foreground="{StaticResource Text1Brush}"
-                       HorizontalAlignment="Center" Margin="0,6,0,0" />
+                       HorizontalAlignment="Center" Margin="0,6,0,0">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{StaticResource Text1Brush}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsRecording}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <!-- Record button -->
             <Button Command="{Binding ToggleRecordCommand}"
-                    Margin="0,18,0,0" Height="48" Width="300"
-                    Cursor="Hand">
+                    Margin="0,16,0,0" Height="48" Width="300" Cursor="Hand">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="Bd" CornerRadius="14"
                                 Background="{StaticResource ElevatedBrush}"
                                 BorderBrush="{StaticResource BorderStrongBrush}"
                                 BorderThickness="1">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Ellipse Width="9" Height="9" Fill="{StaticResource AccentBrush}" Margin="0,0,12,0" />
-                                <TextBlock FontSize="11" FontWeight="SemiBold"
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <Ellipse x:Name="Led" Width="9" Height="9"
+                                         Fill="{StaticResource AccentBrush}" Margin="0,0,12,0" />
+                                <TextBlock x:Name="Lbl" FontSize="11" FontWeight="SemiBold"
                                            Foreground="{StaticResource Text0Brush}"
-                                           FontFamily="{StaticResource UIFont}">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="START RECORDING" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsRecording}" Value="True">
-                                                    <Setter Property="Text" Value="STOP RECORDING" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                           FontFamily="{StaticResource UIFont}"
+                                           Text="START RECORDING" />
                             </StackPanel>
                         </Border>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding IsRecording}" Value="True">
                                 <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentBrush}" />
+                                <Setter TargetName="Led" Property="Fill" Value="White" />
+                                <Setter TargetName="Lbl" Property="Text" Value="STOP RECORDING" />
+                                <Setter TargetName="Lbl" Property="Foreground" Value="White" />
                             </DataTrigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource HoverBrush}" />
-                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter TargetName="Bd" Property="BorderBrush"
+                                            Value="{StaticResource BorderBrightBrush}" />
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
-            <!-- Mini actions -->
+            <!-- Mini actions (rounded corners) -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
-                <Button Command="{Binding TogglePlayCommand}" Content="▶" Style="{x:Null}"
-                        Width="42" Height="34" Margin="3,0"
-                        Background="{StaticResource ElevatedBrush}" Foreground="{StaticResource Text1Brush}"
-                        BorderBrush="{StaticResource BorderMidBrush}" BorderThickness="1"
-                        FontSize="12" Cursor="Hand" />
-                <Button Command="{Binding StopAllCommand}" Content="■" Style="{x:Null}"
-                        Width="42" Height="34" Margin="3,0"
-                        Background="{StaticResource ElevatedBrush}" Foreground="{StaticResource Text1Brush}"
-                        BorderBrush="{StaticResource BorderMidBrush}" BorderThickness="1"
-                        FontSize="12" Cursor="Hand" />
-                <Button Command="{Binding SaveCommand}" Content="💾" Style="{x:Null}"
-                        Width="42" Height="34" Margin="3,0"
-                        Background="{StaticResource ElevatedBrush}" Foreground="{StaticResource Text1Brush}"
-                        BorderBrush="{StaticResource BorderMidBrush}" BorderThickness="1"
-                        FontSize="12" Cursor="Hand" />
-                <Button Command="{Binding OpenCommand}" Content="📂" Style="{x:Null}"
-                        Width="42" Height="34" Margin="3,0"
-                        Background="{StaticResource ElevatedBrush}" Foreground="{StaticResource Text1Brush}"
-                        BorderBrush="{StaticResource BorderMidBrush}" BorderThickness="1"
-                        FontSize="12" Cursor="Hand" />
+                <Button Command="{Binding TogglePlayCommand}" Content="▶"
+                        Style="{StaticResource MiniButton}" ToolTip="Play" />
+                <Button Command="{Binding StopAllCommand}" Content="■"
+                        Style="{StaticResource MiniButton}" ToolTip="Stop" />
+                <Button Command="{Binding SaveCommand}" Content="💾"
+                        Style="{StaticResource MiniButton}" ToolTip="Save session" />
+                <Button Command="{Binding OpenCommand}" Content="📂"
+                        Style="{StaticResource MiniButton}" ToolTip="Open session" />
             </StackPanel>
         </StackPanel>
 
-        <!-- ═══ Waveform placeholder ═══ -->
-        <Border Grid.Row="1" Background="{StaticResource ElevatedBrush}"
+        <!-- ═══ Waveform ═══ -->
+        <Border Grid.Row="2" Background="{StaticResource ElevatedBrush}"
                 BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1" />
 
         <!-- ═══ Stream ═══ -->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -161,11 +190,9 @@
                       Foreground="{StaticResource Text1Brush}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="Padding" Value="20,8" />
+                        <Setter Property="Padding" Value="0" />
                         <Setter Property="Margin" Value="0" />
                         <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="Foreground" Value="{StaticResource Text1Brush}" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
@@ -174,10 +201,12 @@
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource AccentSoftBrush}" />
+                                            <Setter TargetName="Bd" Property="Background"
+                                                    Value="{StaticResource AccentSoftBrush}" />
                                         </Trigger>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Bd" Property="Background" Value="#05FFFFFF" />
+                                            <Setter TargetName="Bd" Property="Background"
+                                                    Value="#05FFFFFF" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -190,14 +219,11 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="36" />
                                 <ColumnDefinition Width="60" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Ellipse Grid.Column="0" Width="7" Height="7"
-                                     VerticalAlignment="Center">
+                            <Ellipse Grid.Column="0" Width="7" Height="7" VerticalAlignment="Center">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
                                         <Setter Property="Fill" Value="{StaticResource CyanBrush}" />
@@ -216,17 +242,16 @@
                                 </Ellipse.Style>
                             </Ellipse>
 
-                            <TextBlock Grid.Column="2" Text="{Binding Label}"
+                            <TextBlock Grid.Column="1" Text="{Binding Label}"
                                        FontFamily="{StaticResource MonoFont}" FontSize="10"
                                        FontWeight="Medium" Foreground="{StaticResource Text0Brush}"
-                                       VerticalAlignment="Center" />
+                                       VerticalAlignment="Center" Margin="8,0,0,0" />
 
-                            <TextBlock Grid.Column="3" Text="{Binding TargetDescription}"
+                            <TextBlock Grid.Column="2" Text="{Binding TargetDescription}"
                                        FontFamily="{StaticResource MonoFont}" FontSize="11"
                                        Foreground="{StaticResource Text1Brush}"
-                                       VerticalAlignment="Center"
+                                       VerticalAlignment="Center" Margin="8,0,0,0"
                                        TextTrimming="CharacterEllipsis" />
-
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -234,10 +259,9 @@
         </Grid>
 
         <!-- ═══ Status bar ═══ -->
-        <Border Grid.Row="3" Background="#26000000"
+        <Border Grid.Row="4" Background="#26000000"
                 BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
             <DockPanel Margin="16,0">
-                <!-- LEDs -->
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Margin="0,0,14,0">
                         <Ellipse Width="7" Height="7" Margin="0,0,7,0" VerticalAlignment="Center">
@@ -262,7 +286,6 @@
                     </StackPanel>
                 </StackPanel>
 
-                <!-- Hotkey hint -->
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Border Background="{StaticResource ElevatedBrush}" CornerRadius="4"
                             BorderBrush="{StaticResource BorderStrongBrush}" BorderThickness="1"

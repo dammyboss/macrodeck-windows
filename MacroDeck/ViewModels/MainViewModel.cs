@@ -102,6 +102,7 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
     public RelayCommand SaveCommand { get; }
     public RelayCommand OpenCommand { get; }
     public RelayCommand ClearCommand { get; }
+    public RelayCommand OpenSettingsCommand { get; }
 
     // ─── Constructor ───
 
@@ -112,6 +113,7 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         StopAllCommand = new RelayCommand(StopAll);
         SaveCommand = new RelayCommand(SaveSession);
         OpenCommand = new RelayCommand(OpenSession);
+        OpenSettingsCommand = new RelayCommand(OpenSettings);
         ClearCommand = new RelayCommand(ClearSession);
 
         _recorder.EventCaptured += OnEventCaptured;
@@ -251,6 +253,16 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         Events.Clear();
         EventCount = 0;
         SessionName = "Untitled Session";
+    }
+
+    private void OpenSettings()
+    {
+        var settingsWin = new SettingsWindow
+        {
+            DataContext = this,
+            Owner = Application.Current.MainWindow,
+        };
+        settingsWin.ShowDialog();
     }
 
     // ─── Internal ───
