@@ -14,7 +14,6 @@ public partial class MainWindow : Window
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        // Attach global hotkeys now that we have a window handle.
         var hwnd = new WindowInteropHelper(this).Handle;
         if (DataContext is MainViewModel vm)
         {

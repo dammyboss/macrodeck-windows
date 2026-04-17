@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Surface colors -->
+    <!-- ═══ Surface colors ═══ -->
     <Color x:Key="WindowBg">#FF0D0D11</Color>
     <Color x:Key="Elevated">#FF15151C</Color>
     <Color x:Key="Hover">#FF1C1C25</Color>
@@ -10,35 +10,33 @@
     <SolidColorBrush x:Key="ElevatedBrush" Color="{StaticResource Elevated}" />
     <SolidColorBrush x:Key="HoverBrush" Color="{StaticResource Hover}" />
 
-    <!-- Borders -->
+    <!-- ═══ Borders ═══ -->
     <SolidColorBrush x:Key="BorderBrush" Color="#0DFFFFFF" />
     <SolidColorBrush x:Key="BorderMidBrush" Color="#14FFFFFF" />
     <SolidColorBrush x:Key="BorderStrongBrush" Color="#1FFFFFFF" />
     <SolidColorBrush x:Key="BorderBrightBrush" Color="#2EFFFFFF" />
 
-    <!-- Text -->
+    <!-- ═══ Text ═══ -->
     <SolidColorBrush x:Key="Text0Brush" Color="#FFEDEDF0" />
     <SolidColorBrush x:Key="Text1Brush" Color="#FF9A9BA8" />
     <SolidColorBrush x:Key="Text2Brush" Color="#FF797A8A" />
     <SolidColorBrush x:Key="Text3Brush" Color="#FF3A3B45" />
 
-    <!-- Accent -->
+    <!-- ═══ Accent ═══ -->
     <Color x:Key="Accent">#FFEF4444</Color>
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}" />
     <SolidColorBrush x:Key="AccentSoftBrush" Color="#1FEF4444" />
 
-    <!-- Event type colors -->
+    <!-- ═══ Event type colors ═══ -->
     <SolidColorBrush x:Key="CyanBrush" Color="#FF22D3EE" />
     <SolidColorBrush x:Key="AmberBrush" Color="#FFF59E0B" />
     <SolidColorBrush x:Key="GreenBrush" Color="#FF10B981" />
 
-    <!-- Fonts -->
+    <!-- ═══ Fonts ═══ -->
     <FontFamily x:Key="MonoFont">Cascadia Mono, Consolas, Courier New</FontFamily>
     <FontFamily x:Key="UIFont">Segoe UI, Tahoma</FontFamily>
 
-    <!-- ═══ Reusable button styles ═══ -->
-
-    <!-- Mini action button (Play, Stop, Save, Open) — rounded corners -->
+    <!-- ═══ Mini action button (Play, Stop, Save, Open) ═══ -->
     <Style x:Key="MiniButton" TargetType="Button">
         <Setter Property="Width" Value="42" />
         <Setter Property="Height" Value="34" />
@@ -53,19 +51,15 @@
                             Background="{StaticResource ElevatedBrush}"
                             BorderBrush="{StaticResource BorderMidBrush}"
                             BorderThickness="1">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center" />
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background"
-                                    Value="{StaticResource HoverBrush}" />
-                            <Setter TargetName="Bd" Property="BorderBrush"
-                                    Value="{StaticResource BorderBrightBrush}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource HoverBrush}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource BorderBrightBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Bd" Property="Background"
-                                    Value="{StaticResource WindowBgBrush}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource WindowBgBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -73,7 +67,7 @@
         </Setter>
     </Style>
 
-    <!-- Gear / icon button — rounded, smaller -->
+    <!-- ═══ Icon button (gear, etc.) ═══ -->
     <Style x:Key="IconButton" TargetType="Button">
         <Setter Property="Width" Value="28" />
         <Setter Property="Height" Value="28" />
@@ -87,20 +81,127 @@
                             Background="{StaticResource ElevatedBrush}"
                             BorderBrush="{StaticResource BorderStrongBrush}"
                             BorderThickness="1">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center" />
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background"
-                                    Value="{StaticResource HoverBrush}" />
-                            <Setter Property="Foreground"
-                                    Value="{StaticResource Text0Brush}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource HoverBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource Text0Brush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- ═══ Settings section button (rounded, dark) ═══ -->
+    <Style x:Key="SettingsButton" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{StaticResource Text0Brush}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="{StaticResource UIFont}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" CornerRadius="8" Padding="14,7"
+                            Background="{StaticResource ElevatedBrush}"
+                            BorderBrush="{StaticResource BorderStrongBrush}"
+                            BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource HoverBrush}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource BorderBrightBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource WindowBgBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ═══ Primary button (Save — accent-colored) ═══ -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontFamily" Value="{StaticResource UIFont}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" CornerRadius="8" Padding="18,8"
+                            Background="{StaticResource AccentBrush}"
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.85" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ═══ Dark TextBox ═══ -->
+    <Style x:Key="DarkTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource WindowBgBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource Text0Brush}" />
+        <Setter Property="CaretBrush" Value="{StaticResource Text0Brush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="8,6" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="Bd" CornerRadius="6"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <ScrollViewer x:Name="PART_ContentHost" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ═══ Dark ComboBox (force dark colors on dropdown) ═══ -->
+    <Style x:Key="DarkComboBox" TargetType="ComboBox">
+        <Setter Property="Background" Value="{StaticResource WindowBgBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource Text0Brush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderStrongBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource MonoFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="8,6" />
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF15151C" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="#FFEDEDF0" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FF1C1C25" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFEDEDF0" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF15151C" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="#FFEDEDF0" />
+        </Style.Resources>
+    </Style>
+
+    <!-- ═══ Dark CheckBox ═══ -->
+    <Style x:Key="DarkCheckBox" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource Text0Brush}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
 </ResourceDictionary>

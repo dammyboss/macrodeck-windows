@@ -94,6 +94,25 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         set => SetField(ref _selectedEvent, value);
     }
 
+    // ─── Settings panel state ───
+
+    private bool _isSettingsOpen;
+    public bool IsSettingsOpen
+    {
+        get => _isSettingsOpen;
+        set
+        {
+            SetField(ref _isSettingsOpen, value);
+            OnPropertyChanged(nameof(MainPageVisibility));
+            OnPropertyChanged(nameof(SettingsPageVisibility));
+        }
+    }
+
+    public Visibility MainPageVisibility =>
+        IsSettingsOpen ? Visibility.Collapsed : Visibility.Visible;
+    public Visibility SettingsPageVisibility =>
+        IsSettingsOpen ? Visibility.Visible : Visibility.Collapsed;
+
     // ─── Commands ───
 
     public RelayCommand ToggleRecordCommand { get; }
@@ -103,6 +122,8 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
     public RelayCommand OpenCommand { get; }
     public RelayCommand ClearCommand { get; }
     public RelayCommand OpenSettingsCommand { get; }
+    public RelayCommand CloseSettingsCommand { get; }
+    public RelayCommand SaveSettingsCommand { get; }
 
     // ─── Constructor ───
 
@@ -113,7 +134,9 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         StopAllCommand = new RelayCommand(StopAll);
         SaveCommand = new RelayCommand(SaveSession);
         OpenCommand = new RelayCommand(OpenSession);
-        OpenSettingsCommand = new RelayCommand(OpenSettings);
+        OpenSettingsCommand = new RelayCommand(() => IsSettingsOpen = true);
+        CloseSettingsCommand = new RelayCommand(() => IsSettingsOpen = false);
+        SaveSettingsCommand = new RelayCommand(() => IsSettingsOpen = false);
         ClearCommand = new RelayCommand(ClearSession);
 
         _recorder.EventCaptured += OnEventCaptured;
@@ -177,6 +200,10 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         }
 
         if (_recorder.Events.Count == 0) return;
+
+        // Stop recording before playing to prevent the mouse hook
+        // from capturing our own synthetic SendInput events.
+        if (IsRecording) ToggleRecord();
 
         _playCts = new CancellationTokenSource();
         IsPlaying = true;
@@ -255,15 +282,6 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         SessionName = "Untitled Session";
     }
 
-    private void OpenSettings()
-    {
-        var settingsWin = new SettingsWindow
-        {
-            DataContext = this,
-            Owner = Application.Current.MainWindow,
-        };
-        settingsWin.ShowDialog();
-    }
 
     // ─── Internal ───
 

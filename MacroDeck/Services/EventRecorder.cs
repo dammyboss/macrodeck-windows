@@ -70,6 +70,11 @@ public sealed class EventRecorder : IDisposable
         if (nCode >= 0 && IsRecording)
         {
             var info = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
+
+            // Skip synthetic events injected by SendInput (prevents
+            // feedback loop if playback runs while hooks are active).
+            if ((info.flags & 1) != 0) // LLMHF_INJECTED
+                return CallNextHookEx(_mouseHook, nCode, wParam, lParam);
             var msg = (int)wParam;
             var type = msg switch
             {
