@@ -78,6 +78,20 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         set => SetField(ref _playbackSpeed, value);
     }
 
+    private double _startDelay;
+    public double StartDelay
+    {
+        get => _startDelay;
+        set => SetField(ref _startDelay, value);
+    }
+
+    private string _humanize = "Off";
+    public string Humanize
+    {
+        get => _humanize;
+        set => SetField(ref _humanize, value);
+    }
+
     private bool _abortOnMove;
     public bool AbortOnMove
     {
